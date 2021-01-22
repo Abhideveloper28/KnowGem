@@ -1,0 +1,2 @@
+class GemInfo < ApplicationRecord
+end
