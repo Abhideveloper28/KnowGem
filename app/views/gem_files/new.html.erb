@@ -1,0 +1,6 @@
+<h1>Hello World!</h1>
+
+<%= form_with model: @gem_file, multipart: true do |f| %>
+  <%= f.file_field :file %>
+  <%= f.submit %>
+<% end %>
