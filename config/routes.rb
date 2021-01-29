@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   root 'gem_files#new'
 
-  resource :gem_files
+  resources :gem_files
 end

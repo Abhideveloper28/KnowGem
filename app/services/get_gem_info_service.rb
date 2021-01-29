@@ -14,7 +14,7 @@ class GetGemInfoService
       puts 'Getting info from database'
       gem_info.description
     else
-      puts 'Getting info from scraping'
+      puts 'Getting info from scraping and store gem detail in database'
       description = gem_scraping
       StoreGemInfoJob.new(@gem_name, description).perform_now
       description

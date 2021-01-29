@@ -1,0 +1,15 @@
+<h1>Gem Information</h1>
+<%= link_to 'check gem', root_path %>
+<table>
+  <tr>
+    <th>Gem Name</th>
+    <th>Description</th>
+  </tr>
+  <% @gem_detail.each do |key, value| %>
+    <tr>
+      <td><%= key %></td>
+      <td><%= value %></td>
+    </tr>
+  <% end %>
+  <tr></tr>
+</table>
