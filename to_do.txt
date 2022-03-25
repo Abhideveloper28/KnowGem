@@ -1,0 +1,9 @@
+To Do:
+redirect on new action with params
+store gemfile
+add project name option
+admin panel to check project name and description of all Gemfile
+store gemfile in DB (should manage by above point)
+add devise for login
+manage my uploaded gemfile and projects
+manage my familiar gem with checkbox facility
