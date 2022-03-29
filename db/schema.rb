@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_091759) do
+ActiveRecord::Schema.define(version: 2022_03_29_125011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,6 @@ ActiveRecord::Schema.define(version: 2022_03_29_091759) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "gem_files_gem_infos", id: false, force: :cascade do |t|
-    t.bigint "gem_file_id"
-    t.bigint "gem_info_id"
-    t.index ["gem_file_id"], name: "index_gem_files_gem_infos_on_gem_file_id"
-    t.index ["gem_info_id"], name: "index_gem_files_gem_infos_on_gem_info_id"
-  end
-
   create_table "gem_infos", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -36,4 +29,15 @@ ActiveRecord::Schema.define(version: 2022_03_29_091759) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "relations", force: :cascade do |t|
+    t.bigint "gem_file_id", null: false
+    t.bigint "gem_info_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gem_file_id"], name: "index_relations_on_gem_file_id"
+    t.index ["gem_info_id"], name: "index_relations_on_gem_info_id"
+  end
+
+  add_foreign_key "relations", "gem_files"
+  add_foreign_key "relations", "gem_infos"
 end

@@ -1,3 +1,4 @@
 class GemInfo < ApplicationRecord
-	has_and_belongs_to_many :gem_file
+  has_many :relations
+  has_many :gem_files, through: :relations
 end
