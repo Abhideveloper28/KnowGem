@@ -4,21 +4,20 @@ require 'open-uri'
 class GetGemInfoService
   GEM_URL = "https://rubygems.org/gems"
 
-  def initialize(gem_name)
+  def initialize(gem_name, gem_file_id)
     @gem_name = gem_name
+    @gem_file_id = gem_file_id
   end
 
-  def gem_description
+  def call
     gem_info = GemInfo.find_by(name: @gem_name)
-    if gem_info.present? && gem_info.description.present?
-      puts 'Getting info from database'
-      gem_info.description
-    else
-      puts 'Getting info from scraping and store gem detail in database'
+    if gem_info.nil?
       description = gem_scraping
-      StoreGemInfoJob.new(@gem_name, description).perform_now
-      description
+      gem_info    = GemInfo.create!(name: @gem_name, description: @description)
     end
+
+    # store record in middle table
+    gem_info.relations.create(gem_file_id: @gem_file_id)
   end
 
   private

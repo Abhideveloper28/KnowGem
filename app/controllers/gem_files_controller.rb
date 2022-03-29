@@ -1,4 +1,5 @@
 class GemFilesController < ApplicationController
+  before_action :set_gem_file, only: [:show]
 
   def index
     @gem_detail = params[:gem_detail]
@@ -10,13 +11,13 @@ class GemFilesController < ApplicationController
 
   def create
     if params[:gem_file].present?
-      file       = params[:gem_file]["file"]
-      gem_detail = get_gem_detail(file)
-      if gem_detail.present?
-        redirect_to action: index, gem_detail: gem_detail
+      @gem_file = GemFile.new(gem_file_params)
+
+      if @gem_file.save
+        redirect_to @gem_file
       else
         flash[:notice] = 'Uploaded file is invalid, please upload a valid file Gemfile'
-        redirect_to root_path
+        render 'new'
       end
     else
       flash[:notice] = 'Please Upload a valid file'
@@ -24,28 +25,17 @@ class GemFilesController < ApplicationController
     end
   end
 
+  def show
+    @info = @gem_file.gem_infos
+  end
+
   private
 
-  def get_gem_detail(file)
-    gem_detail = {}
-    File.open(file).each do |line|
-      gem_row = line.chomp.split(' ')
-
-      next unless gem_row.first == 'gem'
-
-      gem_name    = get_gem_name(gem_row)
-      description = GetGemInfoService.new(gem_name).gem_description # get gem description to service
-      # store gem detail in hash
-      gem_detail[gem_name.to_sym] = description
-    end
-    gem_detail
+  def set_gem_file
+    @gem_file = GemFile.find(params[:id])
   end
 
-  def get_gem_name(gem_row)
-    gem_full_name = gem_row.second
-    split_by      = gem_full_name.include?("\"") ? "\"" : "'"
-
-    gem_full_name.split(split_by)[1] # get gem_name to gemfile row
+  def gem_file_params
+    params.require(:gem_file).permit(:file)
   end
-
 end
