@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_22_132652) do
+ActiveRecord::Schema.define(version: 2022_03_29_091759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 2021_01_22_132652) do
     t.string "file"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "gem_files_gem_infos", id: false, force: :cascade do |t|
+    t.bigint "gem_file_id"
+    t.bigint "gem_info_id"
+    t.index ["gem_file_id"], name: "index_gem_files_gem_infos_on_gem_file_id"
+    t.index ["gem_info_id"], name: "index_gem_files_gem_infos_on_gem_info_id"
   end
 
   create_table "gem_infos", force: :cascade do |t|
