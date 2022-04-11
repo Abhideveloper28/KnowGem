@@ -11,11 +11,10 @@ class GetGemInfoService
 
   def call
     gem_info = GemInfo.find_by(name: @gem_name)
-    if gem_info.nil?
-      description = gem_scraping
-      gem_info    = GemInfo.create!(name: @gem_name, description: @description)
-    end
 
+    gem_info = GemInfo.create!(name: @gem_name, description: gem_scraping) if gem_info.nil?
+
+    gem_info.update(description: gem_scraping) if gem_info.description.nil?
     # store record in middle table
     gem_info.relations.create(gem_file_id: @gem_file_id)
   end
