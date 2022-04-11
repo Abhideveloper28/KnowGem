@@ -5,11 +5,19 @@
     <th class="width-200">Gem Name</th>
     <th>Description</th>
   </tr>
-  <% @info.each do |info| %>
-    <tr>
-      <td><%= info.name %></td>
-      <td><%= info.description %></td>
-    </tr>
-  <% end %>
+  <tbody id='screen'>
+    <% @info.each do |info| %>
+      <tr>
+        <td><%= info.name %></td>
+        <td><%= info.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
   <tr></tr>
 </table>
+
+<script>
+setTimeout(function(){
+   window.location.reload(1);
+}, 3000);
+</script>
